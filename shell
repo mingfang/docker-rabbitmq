@@ -1,0 +1,4 @@
+#!/bin/bash
+source helper
+
+docker run -p 15672:15672 --rm -v `pwd`:/docker -it ${IMAGE} bash

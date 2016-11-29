@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#sv start socklog-unix || exit 1
+
+source /etc/envvars
+
+: ${USER="admin"}
+: ${PASS="admin"}
+
+cat > /etc/rabbitmq/rabbitmq.config <<EOF
+[
+	{rabbit, [{default_user, <<"$USER">>},{default_pass, <<"$PASS">>},{tcp_listeners, [{"0.0.0.0", 5672}]}]}
+].
+EOF
+
+chown rabbitmq /var/log/rabbitmq
+
+exec 2>&1
+exec rabbitmq-server
